@@ -27,6 +27,9 @@ export default function ExerciseList({ data }) {
 }
 
 const ExerciseCard = ({ item, router, index }) => {
+  // DEBUG: temporary log to inspect what data is coming from the API
+  console.log('EXERCISE ITEM:', JSON.stringify(item));
+
   // Safe URL fix: Replaces insecure http:// with secure https:// to prevent blank images
   const secureGifUrl = item?.gifUrl ? item.gifUrl.replace('http://', 'https://') : null;
 

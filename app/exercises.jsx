@@ -7,11 +7,16 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ExerciseList from '../components/ExerciseList';
 import { ScrollView } from 'react-native-virtualized-view';
+import { getEquipmentByBodyPart } from '../constants/equipmentData';
+import EquipmentList from '../components/EquipmentList';
 
 export default function Exercises() {
   const router = useRouter();
   const [exercises, setExercises] = useState([]);
   const item = useLocalSearchParams();
+
+  // Look up equipment for this body part
+  const equipment = getEquipmentByBodyPart(item.name);
 
   useEffect(() => {
     if (item && item.name) {
@@ -27,16 +32,16 @@ export default function Exercises() {
   return (
     <ScrollView>
       <StatusBar style="light" />
-      
+
       {/* Top Banner Image parsed dynamically from navigation params */}
-      <Image 
+      <Image
         source={item.image}
         style={{ width: wp(100), height: hp(45) }}
         className="rounded-b-[40px]"
       />
-      
+
       {/* Floating Back Arrow Overlay */}
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => router.back()}
         className="bg-rose-500 mx-4 absolute flex justify-center items-center rounded-full"
         style={{ height: hp(5.5), width: hp(5.5), marginTop: hp(7) }}
@@ -49,11 +54,21 @@ export default function Exercises() {
         <Text style={{ fontSize: hp(3) }} className="font-semibold text-neutral-700 capitalize">
           {item.name} Exercises
         </Text>
-        
+
         {/* Core dynamic Multi-Column Grid View component */}
         <View className="mb-10">
           <ExerciseList data={exercises} />
         </View>
+
+        {/* Equipment & Machines section */}
+        {equipment.length > 0 && (
+          <View className="mt-2 mb-10">
+            <Text style={{ fontSize: hp(2.6) }} className="font-semibold text-neutral-700 mb-2">
+              Equipment & Machines
+            </Text>
+            <EquipmentList data={equipment} />
+          </View>
+        )}
       </View>
     </ScrollView>
   );

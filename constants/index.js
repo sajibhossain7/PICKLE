@@ -1,4 +1,9 @@
-export const rapidApiKey = 'ed98501c16msh7a7e5c7eea915c6p14faefjsn78f3d8e9e532';
+import Constants from 'expo-constants';
+
+// Reads the RapidAPI key from app.config.js -> extra.rapidApiKey,
+// which in turn comes from the .env file (never hardcoded here).
+export const rapidApiKey = Constants.expoConfig.extra.rapidApiKey;
+
 export const sliderImages = [
     require('../assets/images/slide1.png'),
     require('../assets/images/slide2.png'),
